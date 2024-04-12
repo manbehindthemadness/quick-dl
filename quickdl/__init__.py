@@ -14,6 +14,8 @@ def dl(path: Path, url: str):
     path.mkdir(parents=True, exist_ok=True)
     file_name = url.split('/')[-1]
     file_path = path / file_name
+    if '~' in file_path.as_posix():
+        file_path = file_path.expanduser()
     if not file_path.exists():
         print(f"Downloading {path.name} from {url}...")
         with urllib.request.urlopen(url) as response, open(file_path, 'wb') as out_file:
